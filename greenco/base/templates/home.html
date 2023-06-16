@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+
+
+{% comment %} {% if messages %}
+    {% for msg in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong> {{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+{% endif %} {% endcomment %}
+
+<div>
+    <h1>Home page</h1>
+</div>
+
+
+
+
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script>
+    {% if messages %}
+        alertify.set('notifier','position', 'bottom-center');
+        {% for msg in messages %}
+            alertify.success('{{msg}}');
+        {% endfor %}
+    {% endif %}
+</script>
+
+{% endblock content %}

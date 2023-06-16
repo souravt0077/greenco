@@ -1,0 +1,63 @@
+{% load static %}
+<section class="navigation pt-1">
+    <div class="nav-container">
+      <div class="brand">
+        <a href={% url 'home' %}>Greenco</a>
+      </div>
+      <nav>
+        <div class="nav-mobile"><a id="navbar-toggle" href="#!"><span></span></a></div>
+        <ul class="nav-list">
+          <li>
+            <a href={% url 'home' %}>Home</a>
+          </li>
+          
+          <li>
+            <a href="#!">Services</a>
+            <ul class="navbar-dropdown">
+              <li>
+                <a href="#!">Sass</a>
+              </li>
+              <li>
+                <a href="#!">Less</a>
+              </li>
+              <li>
+                <a href="#!">Stylus</a>
+              </li>
+            </ul>
+          </li>
+          
+          <li>
+            <a href="#!">Category</a>
+            <ul class="navbar-dropdown">
+              <li>
+                <a href="#!">Sass</a>
+              </li>
+              <li>
+                <a href="#!">Less</a>
+              </li>
+              <li>
+                <a href="#!">Stylus</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#!">About</a>
+          </li>
+          <li>
+            <a href="#!">Contact</a>
+          </li>
+          {% if request.user.is_authenticated %}
+            <li>
+                <a href={% url 'logout' %}>Logout</a>
+            </li>
+           {% else %}
+            <li>
+                <a href={% url 'login' %}>Login</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </section> 
+  
+
