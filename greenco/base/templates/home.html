@@ -1,5 +1,5 @@
 {% extends 'main.html' %}
-
+{% load static %}
 {% block title %}Home{% endblock title %}
 
 {% block content %}
@@ -9,19 +9,149 @@
 <!-- Default theme -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 
+<!--google font for main head-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Bebas+Neue&family=Luckiest+Guy&family=Oswald&family=Pacifico&family=Tilt+Prism&display=swap" rel="stylesheet">
 
-{% comment %} {% if messages %}
-    {% for msg in messages %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong> {{msg}}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<!--custom gsap-->
+<link rel="stylesheet" href={% static 'css/gsap.css' %} />
+
+<style>
+    #main{
+        {% comment %} font-family: 'Bangers', cursive; {% endcomment %}
+        {% comment %} font-family: 'Bebas Neue', sans-serif; {% endcomment %}
+        font-family: 'Luckiest Guy', cursive;
+        {% comment %} font-family: 'Oswald', sans-serif; {% endcomment %}
+        {% comment %} font-family: 'Pacifico', cursive; {% endcomment %}
+        {% comment %} font-family: 'Tilt Prism', cursive; {% endcomment %}
+        color:white;
+    }
+    body{
+      background-image: linear-gradient(to right,#1d4350,#a43931);
+      color:white;
+    }
+   
+
+</style>
+
+<!--Gsap starts here-->
+<div class="cInnerContent " id='bg'>
+  <div class="header-section gs_reveal ipsType_center p-5" >
+    <div>
+      <h1 id='main'>Everything you want here</h1>
+      <br>
+      <a class='btn btn-success'>Get start purchasing</a>
     </div>
-    {% endfor %}
-{% endif %} {% endcomment %}
-
-<div>
-    <h1>Home page</h1>
+  </div>  
+    <br>
+    <br>
+    <div class="features">
+  
+      <div class="feature ipsSpacer_bottom_double ipsGrid ipsGrid_collapsePhone">
+        <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft">
+          <div class="card d-block w-100" id='card1'>
+            <img src={% static 'images/mobileaccessories.jpeg' %} alt="image" class='d-block w-100'>
+          </div>
+        </div>
+  
+        <div class="ipsGrid_span7 ipsType_left">
+          <h2 class="heading_large gs_reveal"><strong>Mobile & Accessories</strong></h2>
+          <p class="gs_reveal">Here you can get any brands mobile and its accessories with offers</p>
+          </div>
+      </div>
+  
+      <div class="feature ipsSpacer_bottom_double ipsGrid ipsGrid_collapsePhone">
+        <div class="ipsGrid_span7 ipsType_right">
+          <h2 class="heading_large gs_reveal"><strong>Laptop & Computer Accessories</strong> </h2>
+          <p class="gs_reveal">Variety of barnds and their Accessories available here..Own your laptop today</p>
+        </div>
+  
+        <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromRight">
+          <div class="card">
+            <img width="479" src={% static 'images/laptops.jpg' %} alt="">
+          </div>
+        </div>
+      </div>
+  
+      <div class="feature ipsSpacer_bottom_double ipsGrid ipsGrid_collapsePhone">
+        <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft">
+          <div class="card">
+            <img width="479" src={% static 'images/vegandfruits.jpg' %} alt="">
+          </div>
+        </div>
+  
+        <div class="ipsGrid_span7 ipsType_left">
+          <h2 class="heading_large gs_reveal"><strong>Vegitable & Fruits</strong> </h2>
+          <p class="gs_reveal">We are providing a long list of fruits and and vegitable you can buy your favourites now <br>
+          Deliver within 24 hrs</p>
+        </div>
+      </div>
+  
+      <div class="feature ipsSpacer_bottom_double ipsGrid ipsGrid_collapsePhone">
+        <div class="ipsGrid_span7 ipsType_right">
+          <h2 class="heading_large gs_reveal"><strong>Stationaries</strong></h2>
+          <p class="gs_reveal">Stationaries with lowest price in the market.</p>
+        </div>
+  
+        <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromRight">
+          <div class="card">
+            <img width="479" src={% static 'images/stationaries.jpg' %} alt="">
+          </div>
+        </div>
+      </div>
+      <div class="feature ipsSpacer_bottom_double ipsGrid ipsGrid_collapsePhone">
+        <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft">
+          <div class="card">
+            <img width="479" src={% static 'images/dress.jpg' %} alt="">
+          </div>
+        </div>
+  
+        <div class="ipsGrid_span7 ipsType_left">
+          <h2 class="heading_large gs_reveal"><strong>Clothes</strong> </h2>
+          <p class="gs_reveal">Large collection of Variety of Clothes for everyone...</p>
+        </div>
+      </div>
+      
+  
+    </div>
+  
+  </div>
+  <!--curosel start-->
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src={% static 'images/shopping1.jpg' %} class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src={% static 'images/shopping2.png' %} class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src={% static 'images/shopping3.jpg' %} class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
+<!--curosel end-->
+
+  
+  
+  
+  
+  {% comment %} <header>
+     <a href="#">
+       <img class="greensock-icon" src="#" width="200" height="64" />
+    </a> 
+  </header>
+  <br> {% endcomment %}
+ <!--Gsap end here-->
 
 
 
@@ -36,5 +166,10 @@
         {% endfor %}
     {% endif %}
 </script>
+<!--gsap cdn-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/ScrollTrigger.min.js"></script>
+<!--custom gsap-->
+<script src={% static 'js/gsap.js' %}></script>
 
 {% endblock content %}
