@@ -95,7 +95,7 @@
           <ul class="dropdown-menu">
             {% if request.user.is_authenticated %}
             <li><a class="dropdown-item my-2" href="#"><span class="material-symbols-outlined">badge</span> {{request.user}}</a></li>
-            <li><a class="dropdown-item my-2" href="#">Another action</a></li>
+            <li><a class="dropdown-item my-2" href={% url 'changepassword' %}>Change password</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href={% url 'logout' %}><span class="material-symbols-outlined">logout</span> Logout</a></li>
             {% else %}

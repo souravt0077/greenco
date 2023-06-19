@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,PasswordChangeForm
 # from django.forms import ModelForm
 from .models import User
 from django import forms
@@ -20,3 +20,8 @@ class greencoUserCreationForm(UserCreationForm):
         # widgets={
         #     'dob':dateinput()
         # }
+
+class MyPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(label='old password',widget=forms.PasswordInput(attrs={'autofocus':'true','autocomplete':'current-password','class':'form-control','placeholder':'Old Password'}))
+    new_password1 = forms.CharField(label='new password',widget=forms.PasswordInput(attrs={'autocomplete':'current-password','class':'form-control','placeholder':'New Password'}))
+    new_password2 = forms.CharField(label='confirm password',widget=forms.PasswordInput(attrs={'autocomplete':'current-password','class':'form-control','placeholder':'Confirm Password'}))
