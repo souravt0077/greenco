@@ -37,20 +37,26 @@ class UserLogin(View):
 
 def userRegister(request):
     form=greencoUserCreationForm()
-
     if request.method == 'POST':
         form=greencoUserCreationForm(request.POST)
         if form.is_valid():
             user=form.save(commit=False)
+            this_year=date.today().year
+            age=this_year - user.dob
+            if user.dob < this_year:
+                if age >= 18:
 
-            user.username = user.username.capitalize()
-            user.save()
-            login(request,user)
-            messages.success(request,'Successfully registerd Welcome {}'.format(request.user))
-            return redirect('home')
-        else:
-            messages.error(request,'Something went wrong')
-            return redirect('register')
+                    user.username = user.username.capitalize()
+                    user.save()
+                    login(request,user)
+                    messages.success(request,'Successfully registerd Welcome {}'.format(request.user))
+                    return redirect('home')
+                else:
+                    messages.error(request,'Sorry you are just {} year old child.Please see our guidlines'.format(age))
+                    # return redirect('register')
+            else:
+                messages.error(request,'You enterd wrong year')
+                # return redirect('register')
 
     context={'form':form}
     return render(request,'login_register.html',context)
@@ -64,7 +70,8 @@ class UserLogout(View):
             messages.success(request,'Logout successfully')
             return redirect('home')
         
-
+def guidelines(request):
+    return render(request,'guidelines.html')
 
 
 

@@ -93,11 +93,13 @@
             <span class="material-symbols-outlined">settings</span> Settings
           </a>
           <ul class="dropdown-menu">
+            {% if request.user.is_authenticated %}
             <li><a class="dropdown-item my-2" href="#"><span class="material-symbols-outlined">badge</span> {{request.user}}</a></li>
             <li><a class="dropdown-item my-2" href="#">Another action</a></li>
             <li><hr class="dropdown-divider"></li>
-            {% if request.user.is_authenticated %}
-              <li><a class="dropdown-item" href={% url 'logout' %}><span class="material-symbols-outlined">logout</span> Logout</a></li>
+            <li><a class="dropdown-item" href={% url 'logout' %}><span class="material-symbols-outlined">logout</span> Logout</a></li>
+            {% else %}
+            <li><a class='dropdown-item my-2'>Login required</a></li>
             {% endif %}
           </ul>
         </li>

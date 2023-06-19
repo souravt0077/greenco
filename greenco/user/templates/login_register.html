@@ -111,12 +111,13 @@
                             </div>
                             <br>
                             <div class='text-center'>
-                                <a href={{request.META.HTTP_REFERER}} class='btn btn-dark'>Back</a>
+                                <a class='btn btn-dark' href={{request.META.HTTP_REFERER}} >Back</a>
                                 <input type='submit' value='Register' class='btn btn-outline-success' />
                             </div>
                         </form>
                         <br>
                         <p>Have you allready an Account ? <span class="material-symbols-outlined">login</span> <a href={% url 'login' %} >Sign in </a></p>
+                        <p class='text-center'><a href={% url 'guidelines' %}>guidelines</a></p>
                     </div>
                 </div>
             </div>
@@ -135,6 +136,11 @@
         {% endfor %}
     {% endif %}
 </script>
+<br>
+<br>
+<br>
+<br>
+{% include 'footer.html' %}
 
 {% endblock content %}
 

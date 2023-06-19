@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+
+{% block title %}Guidelines{% endblock title %}
+
+{% block content %}
+<div class='p-5 bg-light'>
+    <h1 class='text-center'>Greenco Guidelines</h1>
+</div>
+<div class='container p-5'>
+    <p>
+        "Thank you for reading <b>Greenco</b> Guidelines",
+    </p>
+        <p>
+            We value your time and patience to read our guideline so we add our guidelines very shortly
+        </p>
+        <p>
+            This is a ecommerce website for shopping products through online.And this website owned by <b>Greenco</b>. if you want to know more about <b>Greenco</b> <a title='About greenco' href={% url 'about' %}>Click here</a>  
+        </p>
+    <div>
+        <h2 class='text-danger'>Login</h2>
+        <ol>
+            <li>You must enter your valid email id and password properly</li>
+            <li>mail id and password are casesentive</li>
+            <li>If you have no account please click on <a href={% url 'register' %}>Register</a> and create your own accout its totaly free of cost</li>
+        </ol>
+    </div>
+    <div>
+        <h2 class='text-danger'>Register</h2>
+        <ol>
+            <li>You should enter your credentials properly</li>
+            <li>username must be start with a letter,digit or an underscore.Allways keep a readable name as your username</li>
+            <li>A minor can't create an account here.Thats why we are asking your year of birth</li>
+            <li>Password must contain 8 or more letter and not similar with username</li>
+            <li>An email id can create only one account</li>
+        </ol>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock content %}
