@@ -34,6 +34,16 @@
             <li>An email id can create only one account</li>
         </ol>
     </div>
+    <div>
+        <h2 class='text-danger'>Forgot Password</h2>
+        <ol>
+            <li>If you forgot your password dont worry about it .You can click on <a href={% url 'password_reset' %}>forgot password</a></li>
+            <li>Enter the same email id used when opening the account </li>
+            <li>Check your mail there should be a link and instruction to reset your password.Click on the link</li>
+            <li>Enter your new password and confirm password with our guidelines thats shown on Register guideline (4 th guideline)</li>
+            <li>Password reset completed. Now you can login your account</li>
+        </ol>
+    </div>
 </div>
 {% include 'footer.html' %}
 {% endblock content %}
