@@ -1,2 +1,2 @@
 # greenco
-Ecommerce website for hypermarket
+Ecommerce website for Purchasing products
