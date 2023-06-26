@@ -1,0 +1,76 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Product details{% endblock title %}
+
+{% block content %}
+<!--custom gsap-->
+<link rel="stylesheet" href={% static 'css/gsap.css' %} />
+
+
+<style>
+    #section{
+        min-height:100vh;
+    }
+    #center{
+        display:grid;
+        justify-content:center;
+        align-item:center;
+        margin-top:10%;
+    }
+    
+</style>
+<section id='section'>
+
+<div class='container'>
+    <div class='row'>
+        <div class='col-sm-6'>
+            {% if products %}
+                {% for item in products %}
+                    <div id='center'>
+                        <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft">
+                            <img src={{item.product_images1.url}} class='d-block w-100' />
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class='col-sm-6'>
+            {% comment %} <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromRight"> {% endcomment %}
+                {% if products %}
+                    {% for item in products %}
+                        <div  id='center'>
+                            <h1>{{item.name}}</h1>
+                            <h4>Rs. <strike class='text-danger'>{{item.selling_price}}</strike> <span class='text-success'>{{item.offer_price}} /-</span></h4>
+                            <hr>
+                            <h5>About</h5>
+                            <p>{{item.about}}</p>
+                            <h5>Features</h5>
+                            <p>{{item.features}}</p>
+
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% comment %} </div> {% endcomment %}
+            <br>
+            <br>
+            <div class='text-end'>
+                <button class='btn btn-success'>Add to cart</button>
+                <button class='btn  btn-danger'>Add to wishlist</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+</section>
+<!--gsap cdn-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/ScrollTrigger.min.js"></script>
+<!--custom gsap-->
+<script src={% static 'js/gsap.js' %}></script>
+
+{% include 'footer.html' %}
+
+{% endblock content %}

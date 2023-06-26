@@ -1,0 +1,76 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Sub category{% endblock title %}
+
+{% block content %}
+
+<!--custom gsap-->
+<link rel="stylesheet" href={% static 'css/gsap.css' %} />
+
+<style>
+    #prod{
+        background-image: linear-gradient(to right,#1d4350,#a43931);
+        color:white;
+      }
+      .card img:hover{
+        transform:scale(1.1);
+        transition: 1s;
+    }
+    #center{
+        display:grid;
+        justify-content:center;
+        align-items:center;
+    }
+    #page{
+        min-height:100vh;
+    }
+ 
+
+</style>
+
+
+<div class=" text-center p-5" id='prod'>
+    
+    <h1 class="heading_large gs_reveal"> Products <i class="bi bi-tag-fill"></i></h1>
+    <p class="gs_reveal">Select your Favourite brand</p>
+
+</div>
+<br>
+<div class='container' id='page'>
+    <div class='row'>
+        {% if products %}
+            {% for item in products %}
+            <div class='col-sm-4'>
+                <a href={% url 'product_details' item.slug %}>
+                    <div class="card d-block w-100 p-5 shadow " style="width: 18rem;" id='card'>
+                        <img src={{item.product_images1.url}} class="card-img-top d-block w-100" alt="...">
+                        <div class="card-body">
+                        <h4 class="card-title text-center" id='name'>{{item.name}}</h4>
+                        {% comment %} <p>{{item.about}}</p> {% endcomment %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div id='center'>
+            <div>
+                <img src={% static 'images/noproducts.png' %} class='d-block w-100' />
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+<!--gsap cdn-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/ScrollTrigger.min.js"></script>
+<!--custom gsap-->
+<script src={% static 'js/gsap.js' %}></script>
+
+<!--footer-->
+{% include 'footer.html' %}
+
+
+{% endblock content %}

@@ -17,6 +17,10 @@
 <!--custom gsap-->
 <link rel="stylesheet" href={% static 'css/gsap.css' %} />
 
+<!--Category icon-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+
 <style>
     #main{
         {% comment %} font-family: 'Bangers', cursive; {% endcomment %}
@@ -31,36 +35,43 @@
       background-image: linear-gradient(to right,#1d4350,#a43931);
       color:white;
     }
-   
-
+    a{
+      text-decoration:none;
+      color:white;
+    }
+    #card img:hover{
+      transform:scale(1.1);
+      transition: 0.6s;
+    }
 </style>
 
 <!--Gsap starts here-->
 <div class="cInnerContent " id='bg'>
   <div class="header-section gs_reveal ipsType_center p-5" >
     <div>
-      <h1 id='main'>Everything you want here</h1>
+      <h1 id='main'>Everything you want is here</h1>
       <br>
-      <a class='btn btn-success'>Start purchasing</a>
+      <a class='btn btn-success' href={% url 'category'%}>Start Exploring  <i class="bi bi-cart4"></i></a>
     </div>
   </div>  
     <br>
     <br>
     <div class="features">
-  
+      <a href={% url 'smartphones' %}>
       <div class="feature ipsSpacer_bottom_double ipsGrid ipsGrid_collapsePhone">
         <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft">
           <div class="card d-block w-100" id='card1'>
             <img src={% static 'images/mobileaccessories.jpeg' %} alt="image" class='d-block w-100'>
           </div>
         </div>
-  
+        
         <div class="ipsGrid_span7 ipsType_left">
           <h2 class="heading_large gs_reveal"><strong>Mobile & Accessories</strong></h2>
           <p class="gs_reveal">Here you can get any brands mobile and its accessories with offers</p>
-          </div>
+        </div>
       </div>
-  
+    </a>
+    <a href={% url 'laptops' %}>
       <div class="feature ipsSpacer_bottom_double ipsGrid ipsGrid_collapsePhone">
         <div class="ipsGrid_span7 ipsType_right">
           <h2 class="heading_large gs_reveal"><strong>Laptop & Computer Accessories</strong> </h2>
@@ -73,7 +84,7 @@
           </div>
         </div>
       </div>
-  
+    </a>
       <div class="feature ipsSpacer_bottom_double ipsGrid ipsGrid_collapsePhone">
         <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft">
           <div class="card">
@@ -112,11 +123,48 @@
           <p class="gs_reveal">Large collection of Variety of Clothes for everyone...</p>
         </div>
       </div>
-      
-  
+
     </div>
   
   </div>
+
+<!--offerd products showing-->
+<br>
+<br>
+<br>
+<div class=" text-center p-5">
+  <h1 class="heading_large gs_reveal"> Categories with Offers <i class="bi bi-tags-fill"></i></h1>
+  <p class="gs_reveal">Variety of barnds and their Accessories available here..Own your laptop today</p>
+</div>
+<br>
+<br>
+<br>
+
+<div class='container'>
+  <div class='row'>
+    {% if offers %}
+      {% for item in offers %}
+        <div class='col-sm-3'>
+          <a href={% url 'subcategory_view' item.slug %}>
+            <div class="card" style="width: 18rem;" id='card'>
+              <img src={{item.category_image.url}} class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{item.name}}</h5>
+                <span class='badge bg-danger'>Offer Available</span>
+                <p class="card-text">{{item.about}}</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div> 
+
+<!--Category show end-->
+
+
+
   <!--curosel start-->
 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">

@@ -13,8 +13,8 @@ urlpatterns = [
     path('guidelines/',views.guidelines,name='guidelines'),
 
     # change password
-    path('changepassword/',auth_view.PasswordChangeView.as_view(template_name='change_password/changepassword.html',form_class=MyPasswordChangeForm,success_url='/passwordchangedone'),name='changepassword'),
-    path('passwordchangedone/',auth_view.PasswordChangeDoneView.as_view(template_name='change_password/passwordchangedone.html',),name='passwordchangedone'),
+    path('changepassword/',auth_view.PasswordChangeView.as_view(template_name='changepassword.html',form_class=MyPasswordChangeForm,success_url='/passwordchangedone'),name='changepassword'),
+    path('passwordchangedone/',auth_view.PasswordChangeDoneView.as_view(template_name='passwordchangedone.html'),name='passwordchangedone'),
 
     # Reset Password
     path('password_reset/',auth_view.PasswordResetView.as_view(template_name='reset_password/password_reset.html',form_class=MyPasswordResetForm),name='password_reset'),

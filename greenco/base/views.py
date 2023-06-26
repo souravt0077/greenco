@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-# Create your views here.
+from products.models import *
 
 @login_required(login_url='login')
 def home(request):
-    context={}
+    category=MainCategory.objects.all()
+    offers=MainCategory.objects.filter(offer=True)
+    context={'offers':offers,'category':category}
     return render(request,'home.html',context)
 
 @login_required(login_url='login')

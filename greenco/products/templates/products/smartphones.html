@@ -1,0 +1,55 @@
+{% extends 'main.html' %}
+
+{% block title %}Smart phones{% endblock title %}
+
+{% block content %}
+<style>
+    a{
+        text-decoration:none;
+    }
+    body{
+        background-image: linear-gradient(to right,#1d4350,#a43931);
+        color:white;
+    }
+    #center{
+        display:grid;
+        justify-content:center;
+        align-items:center;
+    }
+</style>
+
+<!--right arrow-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+
+<div class='container' >
+    <div class='row p-5'>
+        <div class='col-sm-6' id='center'>
+            <div>
+                <h1>All Branded Smartphones </h1>
+                <p>Branded smartphone's with Attractive offers </p>
+            </div>
+        </div>
+        <div class='col-sm-6' id='center'>
+            {% if smartphone %}
+                {% for item in smartphone %}
+                    <div >
+                        <p class='text-center'>Explore More</p>
+                        <h1 class='text-center'><span class="material-symbols-outlined">arrow_downward</span></h1>
+                        <a href={% url 'subcategory_view' item.slug %}>
+                            <div class="card d-block w-100" style="width: 18rem;">
+                                <img src={{item.category_image.url}} class="card-img-top d-block w-100" alt="...">
+                                <div class="card-body">
+                                <h5 class="card-title text-center">{{item.name}}</h5>
+                                <p class="card-text text-center">{{item.about}}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    
+</div>
+{% endblock content %}
