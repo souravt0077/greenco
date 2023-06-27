@@ -1,0 +1,102 @@
+{% extends 'main.html' %}
+
+{% block title %}Update customer{% endblock title %}
+
+{% block content %}
+<style>
+    #section{
+        min-height:100vh;
+        display:grid;
+        justify-content:center;
+        align-items:center;
+    }
+    
+</style>
+<section id='section'>
+<div class='container shadow-lg p-5'>
+    <div class='text-center'>
+        <h1>Update <i class="bi bi-wrench"></i> Address </h1>
+    </div>
+    <form method='POST' action=''>
+        <div class='row'>
+            {% csrf_token %}
+            <div class='col-sm-4'>
+                <div class='form-group my-3 shadow p-2  bg-light'>
+                    {{form.name}}
+                    {% if form.errors.name %}
+                        <label class='text-danger'>{{form.errors.name}}</label>
+                    {% endif %}
+                </div>
+                <div class='form-group my-3 shadow p-2 bg-light'>
+                    {{form.address}}
+                    {% if form.errors.address %}
+                        <label class='text-danger'>{{form.errors.address}}</label>
+                    {% endif %}
+                </div>
+                <div class='form-group my-3 shadow p-2 bg-light'>
+                    {{form.house_no}}
+                    {% if form.errors.house_no %}
+                        <label class='text-danger'>{{form.errors.house_no}}</label>
+                    {% endif %}
+                </div>
+            </div>
+            <div class='col-sm-4'>
+                <div class='form-group my-3 shadow p-2 bg-light'>
+                    {{form.place}}
+                    {% if form.errors.place %}
+                        <label class='text-danger'>{{form.errors.place}}</label>
+                    {% endif %}
+                </div>
+                <div class='form-group my-3 shadow p-2 bg-light'>
+                    {{form.district.label}}
+                    {{form.district}}
+                    {% if form.errors.district %}
+                        <label class='text-danger'>{{form.errors.district}}</label>
+                    {% endif %}
+                </div>
+                <div class='form-group my-3 shadow p-2 bg-light'>
+                    {{form.state.label}}
+                    {{form.state}}
+                    {% if form.errors.state %}
+                        <label class='text-danger'>{{form.errors.state}}</label>
+                    {% endif %}
+                </div>
+            </div>
+            <div class='col-sm-4'>
+                <div class='form-group my-3 shadow p-2 bg-light'>
+                    {{form.mobile}}
+                    {% if form.errors.mobile %}
+                        <label class='text-danger'>{{form.errors.mobile}}</label>
+                    {% endif %}
+                </div>
+                <div class='form-group my-3 shadow p-2 bg-light'>
+                    {{form.mobile2}}
+                    {% if form.errors.mobile2 %}
+                        <label class='text-danger'>{{form.errors.mobile2}}</label>
+                    {% endif %}
+                </div>
+                <div class='form-group my-3 shadow p-2 bg-light'>
+                    {{form.pin_code}}
+                    {% if form.errors.pin_code %}
+                        <label class='text-danger'>{{form.errors.pin_code}}</label>
+                    {% endif %}
+                </div>
+            </div>
+        </div>  
+        <br>
+        <div class='text-center'>
+            <a class='btn btn-sm btn-dark' href={{request.META.HTTP_REFERER}}>Back</a>
+            <input type='submit' class='btn btn-outline-success' value='Update' />
+        </div> 
+    </form>        
+</div>
+</section> 
+
+
+
+
+    
+
+{% include 'footer.html' %}
+
+{% endblock content %}

@@ -1,6 +1,66 @@
 from django.db import models
 from user.models import User 
-# Create your models here.
+
+DISTRICT_CHOICES=(
+    ('kasrgod','kasrgod'),
+    ('Kannur','Kannur'),
+    ('Wayanad','Wayanad'),
+    ('Kozhikode','Kozhikode'),
+    ('Malappuram','Malappuram'),
+    ('Palakkad','Palakkad'),
+    ('Thrissur','Thrissur'),
+    ('Ernakulam','Ernakulam'),
+    ('Idukki','Idukki'),
+    ('Kottayam','Kottayam'),
+    ('Alappuzha','Alappuzha'),
+    ('Pathanamthitta','Pathanamthitta'),
+    ('Kollam','Kollam'),
+    ('Thiruvanathapuram','Thiruvanathapuram'),
+
+)
+
+STATE_CHOICES=(
+    ('Andaman & nicobar islands','Andaman & nicobar islands'),
+    ('Andhra Pradesh','Andhra Pradesh'),
+    ('Arunachal Pradesh','Arunachal Pradesh'),
+    ('Assam','Assam'),
+    ('Bihar','Bihar'),
+    ('Chandigarh','Chandigarh'),
+    ('Chattisgarh','Chattisgarh'),
+    ('Dadra & Nagar Haveli','Dadra & Nagar Haveli'),
+    ('Daman and diu','Daman and diu'),
+    ('Delhi','Delhi'),
+    ('Delhi','Delhi'),
+    ('Goa','Goa'),
+    ('Gujarat','Gujarat'),
+    ('Hariyana','Hariyana'),
+    ('Himachal Pradesh','Himachal Pradesh'),
+    ('Jammu & kashmir','Jammu & kashmir'),
+    ('Jharkhand','Jharkhand'),
+    ('Karnataka','Karnataka'),
+    ('Kerala','Kerala'),
+    ('Lakshdweep','Lakshdweep'),
+    ('Madhya dPradesh','Madhya dPradesh'),
+    ('Maharashtra','Maharashtra'),
+    ('Manipur','Manipur'),
+    ('Meghalaya','Meghalaya'),
+    ('Missoram','Missoram'),
+    ('Nagaland','Nagaland'),
+    ('Odisa','Odisa'),
+    ('Puducherry','Puducherry'),
+    ('Punjab','Punjab'),
+    ('Rajasthan','Rajasthan'),
+    ('Sikkim','Sikkim'),
+    ('Tamilnadu','Tamilnadu'),
+    ('Telengana','Telengana'),
+    ('Tripura','Tripura'),
+    ('Utharakhand','Utharakhand'),
+    ('Utter pradesh','Utter pradesh'),
+    ('West bengal','West bengal'),
+)
+
+
+
 
 class MainCategory(models.Model):
     slug=models.SlugField()
@@ -40,5 +100,28 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+class Customer(models.Model):
+    name=models.CharField(max_length=200)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    image=models.ImageField(upload_to='customer',null=True)
+    address=models.TextField(max_length=500)
+    house_no=models.IntegerField(null=True)
+    place=models.CharField(max_length=150,null=True)
+    district=models.CharField(choices=DISTRICT_CHOICES ,max_length=150,null=True)
+    state=models.CharField(choices=STATE_CHOICES,max_length=150,null=True)
+    mobile=models.CharField(max_length=12)
+    mobile2=models.CharField(max_length=12)
+    pin_code=models.IntegerField()
+    created_at=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        ordering=['-created_at']
+
+
+
 
 

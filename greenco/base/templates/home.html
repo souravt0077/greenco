@@ -146,7 +146,7 @@
       {% for item in offers %}
         <div class='col-sm-3'>
           <a href={% url 'subcategory_view' item.slug %}>
-            <div class="card" style="width: 18rem;" id='card'>
+            <div class="card d-block w-100" style="width: 18rem;" id='card'>
               <img src={{item.category_image.url}} class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">{{item.name}}</h5>

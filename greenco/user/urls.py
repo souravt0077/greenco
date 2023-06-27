@@ -5,9 +5,14 @@ from .forms import MyPasswordChangeForm,MyPasswordResetForm,MySetPasswordForm
 
 
 urlpatterns = [
+    # authentications
     path('login/',views.UserLogin.as_view(),name='login'),
     path('register/',views.userRegister,name='register'),
     path('logout/',views.UserLogout.as_view(),name='logout'),
+
+    # user profile
+    path('profile/',views.userProfile,name='profile'),
+
 
     # Guideline
     path('guidelines/',views.guidelines,name='guidelines'),

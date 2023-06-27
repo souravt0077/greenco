@@ -1,0 +1,101 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+
+
+
+
+<style>
+    body{
+        background-image: linear-gradient(to right,#1d4350,#a43931);
+        color:white;
+      }
+
+</style>
+
+
+<div class='container p-5'>
+    <div class='text-center'>
+        <h1>{{request.user}} <small><i class="bi bi-patch-check text-primary" title='Verified User'></i></small></h1>
+        <hr>
+    </div>
+    <div class='row'>
+        <div class='col-sm-6 p-5 '>
+            <h3 class='text-center'>User Details <i class="bi bi-card-list"></i></h3>
+            <hr>
+            <div>
+                <h5>Email: {{request.user.email}}</h5>
+                <h5>Year of birth: {{request.user.dob}}</h5>
+                <h5>Age: {{age}}</h5>
+                <h6>Joined in: {{request.user.date_joined|date}}</h6>
+            </div>
+
+
+        </div>
+        <div class='col-sm-6 p-5'>
+            <h3 class='text-center'>Shipping Address <i class="bi bi-house-check"></i></h3>
+            <hr>
+            <p><b>{{address_count}}</b> Address available </p>
+            <div class='row'>
+                {% if customers %}
+                    {% for item in customers %}
+                    <div class='col-sm-6 g-2'>
+                        <div class="card d-block w-100 bg-dark text-white" style="width: 18rem;">
+                            <div class="card-body">
+                            <div class='text-end'>
+                                <a class='btn btn-sm btn-outline-danger' href={% url 'remove_customer' item.id %}><i class="bi bi-x-lg"></i></a>
+                            </div>
+                            <p class="card-title">Name: {{item.name}}</p>
+                            <p class="card-text">Address: {{item.address}} </p>
+                            <p class="card-text">House/Flat no.: {{item.house_no}}</p>
+                            <p class="card-text">Place: {{item.place}}</p>
+                            <p class="card-text">District: {{item.district}} </p>
+                            <p class="card-text">State: {{item.state}}</p>
+                            <p class="card-text">Contact: {{item.mobile}}</p>
+                            <p class="card-text">Contact 2: {{item.mobile2}}</p>
+                            <p class="card-text">Pin code: {{item.pin_code}}</p>
+                            <div class='text-end'>
+                                <a href={% url 'update_customer' item.id %} class="btn btn-sm btn-outline-success">Update</a>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <img src={% static 'images/nodatafound.png' %} class='d-block w-100' />
+                {% endif %}
+            </div>
+            <br>
+            <div class='text-end'>
+                {% if address_count > 2 %}
+                    <a href={% url 'customer_address' %} class='text-white'>See all address</a>
+                {% endif %}
+            </div>
+            <a class='btn btn-sm btn-outline-light' href={% url 'customer_details' %}>Add Address</a>
+            
+        </div>
+    </div>
+    
+</div>
+
+
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script>
+    {% if messages %}
+        alertify.set('notifier','position', 'bottom-center');
+        {% for msg in messages %}
+            alertify.success('{{msg}}');
+        {% endfor %}
+    {% endif %}
+</script>
+
+
+
+{% endblock content %}

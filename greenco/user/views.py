@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .forms import greencoUserCreationForm
-
+from products.models import Customer,MainCategory
 from datetime import date
 
 class UserLogin(View):
@@ -69,6 +69,16 @@ class UserLogout(View):
             logout(request)
             messages.success(request,'Logout successfully')
             return redirect('home')
+        
+@login_required(login_url='home')        
+def userProfile(request):
+    this_year=date.today().year
+    age=this_year - request.user.dob  
+    customers=Customer.objects.filter(user=request.user)
+    address_count=len(customers)
+    category=MainCategory.objects.all()
+    context={'age':age,'customers':customers[:2],'category':category,'address_count':address_count}
+    return render(request,'profile.html',context)
         
 def guidelines(request):
     return render(request,'guidelines.html')
