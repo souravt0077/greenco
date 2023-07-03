@@ -12,10 +12,20 @@ urlpatterns = [
     path('update_customer/<str:pk>/',views.update_customer,name='update_customer'),
     path('customer_address',views.customer_address,name='customer_address'),
 
+    # add to cart
+    path('add-to-cart/',views.addToCart,name='add-to-cart'),
+    path('cart/',views.cart,name='cart'),
+    path('remove_cart/<str:pk>/',views.remove_cart,name='remove_cart'),
+
+    # wishlist
+    path('add_to_wishlist/',views.addtowishlist,name='add_to_wishlist'),
+    path('wishlist/',views.wishlist,name='wishlist'),
+    path('remove_wishlist/<str:pk>/',views.remove_wishlist,name='remove_wishlist'),
 
 
     path('smartphones/',views.smartphones,name='smartphones'),
     path('laptops/',views.laptops,name='laptops'),
 
     
+
 ]

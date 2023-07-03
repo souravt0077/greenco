@@ -1,0 +1,68 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Whishlist{% endblock title %}
+
+{% block content %}
+<style>
+    #empty{
+        display:grid;
+        justify-content:center;
+        align-items:center;
+        margin-top:10%;
+    }
+    #page{
+        min-height:100vh;
+    }
+    
+</style>
+
+<div id='page'>
+<div class='container'>
+    <div class='row'>
+        {% if wishlist_items %}
+        <div class=" text-center p-5 ">
+            <h1 class="heading_large gs_reveal"> Wishlist <i class="bi bi-heart"></i></h1>
+            <p class="gs_reveal"></p>
+        </div>
+        <br>
+            {% for item in wishlist_items %}
+            <div class='col-sm-3'>
+                
+                    <div class='text-danger text-end'>
+                        <a href={% url 'remove_wishlist' item.pk %}><i class="bi bi-x-circle"></i></a>
+                    </div>
+                    <a href={% url 'product_details' item.product.slug %}>
+                    <div class="card d-block w-100" style="width: 18rem;" id='card'>
+                        {% if item.product.offer %}
+                            <span class="badge bg-danger">Offer Available</span> 
+                        {% endif %}
+                        <img src={{item.product.product_images1.url}} class="card-img-top" alt="...">
+                        <div class="card-body">
+                        <h5 class="card-title">{{item.product.name}} 
+                            
+                        </h5>
+                        <h5>Rs.<strike class='text-danger'><small>{{item.product.selling_price}}</small></strike> <span class='text-success'>{{item.product.offer_price}}</span>/- </h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class='text-center' id='empty'>
+            <img src={% static 'images/emptywishlist.png' %} />
+        </div>
+        {% endif %}
+    </div>
+</div>
+</div>
+
+
+<!--gsap cdn-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/ScrollTrigger.min.js"></script>
+<!--custom gsap-->
+<script src={% static 'js/gsap.js' %}></script>
+
+{% include 'footer.html' %}
+
+{% endblock content %}

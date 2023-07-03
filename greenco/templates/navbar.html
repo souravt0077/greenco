@@ -96,6 +96,12 @@
         {% endif %}
       </ul>
       <ul class="navbar-nav ms-auto mb-2 me-2 ">
+          <li class="nav-item mx-2">
+            <a class="nav-link text-white" href={% url 'cart' %}><span class="material-symbols-outlined">shopping_cart</span> Cart {% if item_count == 0  %}<span> </span>{% else %} {{item_count}} {% endif %} </a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link text-white" href={% url 'wishlist' %}><span class="material-symbols-outlined">favorite</span> Wishlist {% if count == 0  %}<span> </span>{% else %} {{count}} {% endif %}  </a>
+          </li>
           <li class="nav-item dropdown me-5">
           <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <span class="material-symbols-outlined">settings</span> Settings

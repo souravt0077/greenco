@@ -6,6 +6,10 @@
 <!--custom gsap-->
 <link rel="stylesheet" href={% static 'css/gsap.css' %} />
 
+<!--custom js-->
+<script src={% static 'js/custom.js' %}></script>
+
+
 
 <style>
     #section{
@@ -14,12 +18,43 @@
     #center{
         display:grid;
         justify-content:center;
-        align-item:center;
+        align-items:center;
         margin-top:10%;
+    }
+    .add_to_cart{
+        background-color:lightgreen;
+        padding:10px;
+        border-radius: 10%;
+        border:0;
+
+    }
+    .add_to_cart:hover{
+        background-color:green;
+        border-radius: 10%;
+        transition: 1s;
+        color:white;
+        border:0;
+    }
+    .add_to_wishlist{
+        background-color:lightgoldenrodyellow;
+        padding:10px;
+        border-radius: 10%;
+        border:0;
+
+    }
+    .add_to_wishlist:hover{
+        background-color:orange;
+        border-radius: 10%;
+        transition: 1s;
+        color:white;
+        border:0;
+
     }
     
 </style>
 <section id='section'>
+
+
 
 <div class='container'>
     <div class='row'>
@@ -38,7 +73,7 @@
             {% comment %} <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromRight"> {% endcomment %}
                 {% if products %}
                     {% for item in products %}
-                        <div  id='center'>
+                        <div  id='center' class='product_data'>
                             <h1>{{item.name}}</h1>
                             <h4>Rs. <strike class='text-danger'>{{item.selling_price}}</strike> <span class='text-success'>{{item.offer_price}} /-</span></h4>
                             <hr>
@@ -46,30 +81,45 @@
                             <p>{{item.about}}</p>
                             <h5>Features</h5>
                             <p>{{item.features}}</p>
-
+                            <p class='text-danger'> Only <b>{{item.quantity}}</b> peice's Available</p>
+                            <div class='p-3 text-center border border-success'>
+                                <h5>Quantity</h5>
+                                <hr>
+                                <button class='btn btn-sm btn-outline-success increment-btn'><i class="bi bi-plus-circle-fill"></i></button>
+                                <input type='text' value=1 disabled class='qty_input btn' style='width:130px;' />
+                                <button class='less btn btn-sm btn-outline-danger decrement-btn'><i class="bi bi-dash-circle-fill"></i></button>
+                            </div>        
+                            {% csrf_token %}
+                            <input type='hidden' class='prod_id' value={{item.id}} />
+                        </div>
+                        <div class='text-center'>
+                            <button class='add_to_cart mx-3 my-3'>Add to cart <i class="bi bi-cart-plus"></i></button>
+                            <button class='add_to_wishlist'>Add to wishlist <i class="bi bi-heart"></i></button>
                         </div>
                     {% endfor %}
                 {% endif %}
             {% comment %} </div> {% endcomment %}
             <br>
-            <br>
-            <div class='text-end'>
-                <button class='btn btn-success'>Add to cart</button>
-                <button class='btn  btn-danger'>Add to wishlist</button>
-            </div>
+            
         </div>
 
     </div>
 </div>
-
+<br>
+<br>
 
 
 </section>
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+
 <!--gsap cdn-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/ScrollTrigger.min.js"></script>
 <!--custom gsap-->
 <script src={% static 'js/gsap.js' %}></script>
+
 
 {% include 'footer.html' %}
 

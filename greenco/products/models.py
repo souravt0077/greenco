@@ -93,6 +93,7 @@ class Product(models.Model):
     product_images5=models.ImageField(upload_to='product_images',null=True,blank=True)
     selling_price=models.IntegerField(default=0)
     offer_price=models.IntegerField(default=0)
+    quantity=models.IntegerField(default=1)
     about=models.TextField(max_length=250)
     features=models.TextField(max_length=500,null=True,blank=True)
     offer=models.BooleanField(default=False)
@@ -121,7 +122,25 @@ class Customer(models.Model):
     class Meta:
         ordering=['-created_at']
 
+class Cart(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    product=models.ForeignKey(Product,on_delete=models.CASCADE)
+    product_qty=models.IntegerField(null=False,blank=False)
+    created_at=models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return "{} {}".format(self.user,self.product)
 
+    class Meta:
+        ordering=['-created_at']
 
+class Wishlist(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    product=models.ForeignKey(Product,on_delete=models.CASCADE)
+    created_at=models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return "{} {}".format(self.user,self.product)
+
+    class Meta:
+        ordering=['-created_at']
