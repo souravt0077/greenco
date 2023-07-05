@@ -5,5 +5,8 @@ admin.site.register(MainCategory)
 admin.site.register(Product)
 admin.site.register(SubCategory)
 admin.site.register(Customer)
-admin.site.register(Cart)
+
+class cartAdmin(admin.ModelAdmin):
+    list_display=['id','user','product']
+admin.site.register(Cart,cartAdmin)
 admin.site.register(Wishlist)

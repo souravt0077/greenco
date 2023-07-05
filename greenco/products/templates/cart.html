@@ -27,49 +27,101 @@
         align-items:center;
         margin-top:10%;
     }
+    #center{
+        display:grid;
+        justify-content:center;
+        align-items:center;
+    }
 </style>
 
 <div id='page'>
     
     <div class='container'>
         <div class='row'>
-            {% if cart_items %}
+            
             <div class=" text-center p-5 ">
-                <h1 class="heading_large gs_reveal"> Cart <i class="bi bi-cart-check"></i></h1>
+                <h1 class="heading_large gs_reveal"> Cart <i class="bi bi-cart-plus text-primary"></i></h1>
                 <p class="gs_reveal"></p>
             </div>
+            <hr>
             <br>
-                {% for item in cart_items %}
-                <div class='col-sm-3'>
-                    
-                        <div class='text-danger text-end'>
-                            <a href={% url 'remove_cart' item.pk %}><i class="bi bi-x-circle"></i></a>
-                        </div>
-                        <a href={% url 'product_details' item.product.slug %}>
-                        <div class="card d-block w-100" style="width: 18rem;" id='card'>
-                            {% if item.product.offer %}
-                                <span class="badge bg-danger">Offer Available</span> 
-                            {% endif %}
-                            <img src={{item.product.product_images1.url}} class="card-img-top" alt="...">
-                            <div class="card-body">
-                            <h5 class="card-title">{{item.product.name}} </h5>
-                            <h6>Quantity: {{item.product_qty}}</h6>
-                            <h5>Rs.<strike class='text-danger'><small>{{item.product.selling_price}}</small></strike> <span class='text-success'>{{item.product.offer_price}}</span>/- </h5>
+            <div class='row'>
+                <div class='col-sm-9'>
+                    <div>
+                        {% if cart_items %}
+                            {% for item in cart_items %}
+                            <div class='text-end'>
+                            <a class='btn btn-sm btn-outline-danger text-end' href={% url 'remove_cart' item.pk %} ><i class="bi bi-x-square-fill"></i></a>
                             </div>
-                        </div>
-                    </a>
+                                <div class='shadow ' >
+                                    <div class='row text-center border-end border-start mb-3 p-3 product_data '>
+                                        <div class='col-sm-4 p-2' id='center'>
+                                            <a href={% url 'product_details' item.product.slug %}>
+                                            <img src={{item.product.product_images1.url}}  class='d-block w-100'/>
+                                            </a>
+                                        </div>
+                                        <div class='col-sm-2 p-2 ' id='center'>
+                                            <h5>{{item.product.name}}</h5>
+
+                                        </div>
+                                        </a>
+                                        <div class='col-sm-2 p-2 ' id='center'>
+                                            <h5><i class="bi bi-currency-rupee"></i><b>{{item.product.offer_price}} /-</b></h5>
+
+                                        </div>
+                                        <div class='col-sm-4 p-2 ' id='center'>
+                                            <div>
+                                                {% csrf_token %}
+                                                <input type='hidden' value={{item.id}} class='prod_id' />
+                                                <button class='btn btn-sm btn-outline-success changeqty increment-btn'><i class="bi bi-plus-circle-fill"></i></button>
+                                                <input type='text' value={{item.product_qty}} disabled class='qty_input btn ' style='width:50px;' />
+                                                <button class='less btn btn-sm btn-outline-danger changeqty decrement-btn  '><i class="bi bi-dash-circle-fill"></i></button>
+                                            </div>        
+                                        </div>
+                                                                              
+                                    </div>
+
+                                </div>
+                            
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                 </div>
-                {% endfor %}
-            {% else %}
-            <div class='text-center' id='empty'>
-                <img src={% static 'images/emptycart.png' %} />
+                {% if cart_items %}
+                <div class='col-sm-3 border-end'>
+                    <div class='text-center'>
+                        <h3>Total Amount</h3>
+                        <hr>
+                        <h6>Amount : <i class="bi bi-currency-rupee"></i>{{amount}} /-</h6>
+                        {% if amount >= 2000 %}
+                        <p>Shipping charge : <i class="bi bi-currency-rupee"></i><strike> 40</strike> /-  free shipping</p>
+                        {% else %}
+                        <p>Shipping charge : <i class="bi bi-currency-rupee"></i> 40 /- </p>
+                        <code>Free shiping available when Total amount greaterthan <i class="bi bi-currency-rupee"></i>2000 /- </code>
+
+                        {% endif %}
+                        <hr>
+                        <h5>Total Amount : <i class="bi bi-currency-rupee"></i><b>{{total_amount}} /-</b></h5>
+                        <hr>
+                        <hr>
+                        <p><b>{{item_count}} products moving to Checkout page</b></p>
+                        <p>Order detials and total price will be shown there</p>
+                        <a class='btn  btn-dark' href={% url 'checkout' %}>Checkout</a>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+                {% else %}
+                        <div class='text-center' id='empty'>
+                            <img src={% static 'images/emptycart.png' %} />
+                        </div>
+                {% endif %}
             </div>
-            {% endif %}
-            <h1>{{total_amount}}</h1>
         </div>
     </div>
 </div>
-
+<br>
+<br>
 <!-- JavaScript -->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script>
@@ -87,6 +139,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/ScrollTrigger.min.js"></script>
 <!--custom gsap-->
 <script src={% static 'js/gsap.js' %}></script>
+
+<!--custom js-->
+<script src={% static 'js/custom.js' %}></script>
 
 <!--footer-->
 {% include 'footer.html' %}

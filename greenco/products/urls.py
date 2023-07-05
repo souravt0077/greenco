@@ -17,11 +17,17 @@ urlpatterns = [
     path('cart/',views.cart,name='cart'),
     path('remove_cart/<str:pk>/',views.remove_cart,name='remove_cart'),
 
+    # update cart qty
+    path('update_cart/',views.update_cart,name='update_cart'),
+
+
     # wishlist
     path('add_to_wishlist/',views.addtowishlist,name='add_to_wishlist'),
     path('wishlist/',views.wishlist,name='wishlist'),
     path('remove_wishlist/<str:pk>/',views.remove_wishlist,name='remove_wishlist'),
 
+    # checkout
+    path('checkout/',views.checkout,name='checkout'),
 
     path('smartphones/',views.smartphones,name='smartphones'),
     path('laptops/',views.laptops,name='laptops'),

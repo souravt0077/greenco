@@ -147,15 +147,39 @@ def cart(request):
     item_count=len(cart_items)
     wishlist_items=Wishlist.objects.filter(user=request.user)
     count=len(wishlist_items)
+    amount=0
+    for p in cart_items:
+        value = p.product_qty * p.product.offer_price
+        amount = amount + value
+    if amount >= 2000:
+        total_amount = amount
+    else:
+        total_amount= amount + 40
 
-
-    context={'cart_items':cart_items,'item_count':item_count,'category':category,'count':count}
+    context={'cart_items':cart_items,'item_count':item_count,'category':category,'count':count,'total_amount':total_amount,'amount':amount}
     return render(request,'cart.html',context)
 
 def remove_cart(request,pk):
     cart_items=Cart.objects.filter(user=request.user,id=pk)
     cart_items.delete()
     return redirect('cart')
+
+# update cart qty
+
+def update_cart(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            prod_id = int(request.POST.get('id'))
+            if Cart.objects.filter(user=request.user,product_id=prod_id):
+                prod_qty=int(request.POST.get('qty'))
+                cart=Cart.objects.get(user=request.user,product_id=prod_id)
+                cart.product_qty=prod_qty
+                cart.save()
+                return JsonResponse({'status':'Cart updated'})
+        else:
+            return JsonResponse({'status':'Login to continue'})
+        
+    return redirect('home')
 
 # wishlist
 
@@ -198,7 +222,23 @@ def remove_wishlist(request,pk):
     return redirect('wishlist')
 
 
+# checkout
 
+def checkout(request):
+    cart_items=Cart.objects.filter(user=request.user)
+    amount=0
+    for p in cart_items:
+        value = p.product_qty * p.product.offer_price
+        amount = amount + value
+    if amount >= 2000:
+        total_amount = amount
+    else:
+        total_amount= amount + 40
+    address=Customer.objects.filter(user=request.user)[:2]
+
+    
+    context={'cart_items':cart_items,'total_amount':total_amount,'address':address,'amount':amount}
+    return render(request,'checkout.html',context)
 
 
 # Product based views

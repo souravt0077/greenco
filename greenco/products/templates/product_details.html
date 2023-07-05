@@ -6,6 +6,8 @@
 <!--custom gsap-->
 <link rel="stylesheet" href={% static 'css/gsap.css' %} />
 
+<link rel="stylesheet" href={% static 'css/prod_details_gsap.css' %} />
+
 <!--custom js-->
 <script src={% static 'js/custom.js' %}></script>
 
@@ -107,9 +109,78 @@
 </div>
 <br>
 <br>
-
-
 </section>
+<!--gsap-->
+<div>
+    {% if products %}
+    {% for item in products %}
+    <div class="container2 container">
+        <div class="description panel blue  p-5">
+
+        <div>
+            <h2>{{item.name}}</h2>
+            <p>{{item.about}}</p>
+            <p>{{item.features}}</p>
+            <p>Scroll down to move</p>
+        </div>
+        
+    </div>
+    
+    
+        <section class="panel red d-block w-100">
+            <img src={{item.product_images1.url}} class='d-block w-75' />
+            <br>
+            <p>{{item.features}}</p>
+        </section>
+
+        <section class="panel orange d-block w-100">
+            {% if item.product_images2 %}
+            <img src={{item.product_images2.url}} class='d-block w-75' />
+            {% else %}
+            <img src={% static 'images/image_not_available.png' %} class='d-block w-100' />
+            {% endif %}
+            <p>{{item.features}}</p>
+            <br>
+        </section>
+        <section class="panel purple d-block w-100">
+            {% if item.product_images3 %}
+            <img src={{item.product_images3.url}} class='d-block w-75' />
+            {% else %}
+            <img src={% static 'images/image_not_available.png' %} class='d-block w-100' />
+            {% endif %}
+            <p>{{item.features}}</p>
+            <br>
+        </section>
+        <section class="panel green d-block w-100">
+            {% if item.product_images4 %}
+            <img src={{item.product_images4.url}} class='d-block w-75' />
+            {% else %}
+            <img src={% static 'images/image_not_available.png' %} class='d-block w-100' />
+            {% endif %}
+            <p>{{item.features}}</p>
+            <br>
+        </section>
+        <section class="panel gray d-block w-100">
+            {% if item.product_images5 %}
+            <img src={{item.product_images5.url}} class='d-block w-75' />
+            {% else %}
+            <img src={% static 'images/image_not_available.png' %} class='d-block w-100' />
+            {% endif %}
+            <br>
+            <p>{{item.features}}</p>
+        </section>
+    </div>
+    {% endfor %}
+    {% endif %} 
+</div>  
+<br>
+<br>
+<div class="container">
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Unde omnis, illo totam pariatur esse cum alias id numquam dicta quidem in quibusdam excepturi, soluta ab! Praesentium sapiente molestias mollitia accusamus nemo, dicta temporibus aspernatur eaque earum, dolore vero sequi quae inventore nesciunt reiciendis voluptatum itaque cum ipsam officia repellat laborum doloribus! Quo in consectetur, aliquam eius, dignissimos repellendus commodi officiis sapiente dolorem vel fugiat nisi amet expedita nihil explicabo harum, reiciendis corrupti eum dolore doloremque asperiores ipsa voluptatem nulla? Dicta nam obcaecati quos molestiae voluptatum veniam nobis natus, odit, id illo ducimus in tempora blanditiis expedita? Debitis esse delectus soluta labore dolores temporibus id aspernatur magni error voluptatem, minus neque, aut inventore ipsam sint odit enim nostrum qui nemo vitae recusandae deleniti voluptatum non rerum. Obcaecati officiis dolores necessitatibus inventore<br> praesentium unde neque numquam placeat, at, nostrum voluptas vitae perferendis commodi eveniet consectetur quibusdam culpa repellendus eos delectus non. Quae blanditiis similique molestias magnam quos ipsa reiciendis quisquam a harum corporis illum nam, iusto unde voluptas praesentium quod qui aut, voluptates labore. Provident quia molestias maiores voluptatibus laudantium facere itaque voluptate exercitationem, consequatur, in aspernatur iste tenetur nulla suscipit harum magni cupiditate corrupti sapiente pariatur ratione labore at libero. Possimus cupiditate veniam omnis optio ut obcaecati autem quis enim dignissimos accusantium, provident totam doloribus corrupti porro iusto. Cum, quis? Iste accusamus qui debitis consequuntur iusto voluptates ab unde, ullam maiores veniam sapiente quaerat dolorum voluptatum animi et officia provident. Error, saepe doloremque voluptatibus at incidunt ipsum nobis porro. Commodi, quam?</p>
+</div>
+
+<!--gsap end-->
+
 <!-- JavaScript -->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
@@ -119,6 +190,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/ScrollTrigger.min.js"></script>
 <!--custom gsap-->
 <script src={% static 'js/gsap.js' %}></script>
+<script src={% static 'js/gsap_prod_details.js' %}></script>
 
 
 {% include 'footer.html' %}

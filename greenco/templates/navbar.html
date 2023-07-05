@@ -57,7 +57,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0 ">
         <li class="nav-item mx-2 ">
-          <a class="nav-link active text-white" aria-current="page" href={% url 'home' %}><span class="material-symbols-outlined text-white">dashboard</span> Dashboard</a>
+          <a class="nav-link active text-white" aria-current="page"   href={% url 'home' %}><span class="material-symbols-outlined text-white">dashboard</span> Dashboard</a>
         </li>
         <li class="nav-item dropdown mx-2">
           <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -82,7 +82,7 @@
           <a class="nav-link text-white" href="#"><span class="material-symbols-outlined text-white">info</span> Info</a>
         </li>
         <li class="nav-item mx-2">
-          <a class="nav-link text-white"><span class="material-symbols-outlined text-white">support_agent</span> Support</a>
+          <a class="nav-link text-white" href="#"><span class="material-symbols-outlined text-white">support_agent</span> Support</a>
         </li>
         {% if request.user.is_authenticated %}
 
