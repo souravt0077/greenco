@@ -25,12 +25,12 @@
     </div>
     <hr>
     <div class='row'>
-        <div class='col-sm-6 shadow p-3'>
-            <h1 class='text-center'>Order summury</h1>
+        <div class='col-sm-4 shadow p-3'>
+            <h3 class='text-center'>Order summury</h3>
             <hr>
             {% if cart_items %}
                 {% for item in cart_items %}
-                    <div class='card mb-2'>
+                    <div class='card mb-2 g-2'>
                         <div class='card-body'>
                             <a href={% url 'product_details' item.product.slug %}>
                                 <div class='row'>
@@ -56,51 +56,47 @@
                             <code>Free shiping available when Total amount greaterthan <i class="bi bi-currency-rupee"></i>2000 /- </code>
                         {% endif %}
                         <p class='fw-bold'>Total amount : <i class="bi bi-currency-rupee"></i>{{total_amount}}/-</p>
+                        <br>
                         
                     </div>
                 </div>
             {% endif %}
         </div>
-        <div class='col-sm-2 '>
+        <div class='col-sm-1'>
 
         </div>
-        <div class='col-sm-4 shadow p-3'>
-            <h4>Select Shipping Address</h4>
+        <div class='col-sm-7 shadow p-3'>
+            <h4>Shipping Address</h4>
             <hr>
-            <form method='POST' action='' id='myform'>
+            <form method='POST' action={% url 'placeorder' %}> 
                 {% csrf_token %}
-                {% for ad in address %}
-                    <div class='card'>
-                        <div class='card-body'>
-                            <h5><b>{{ad.name}}</b></h5>
-                            <p>Address :<b>{{ad.address}}</b></p>
-                            <p>House/flat no.:<b>{{ad.house_no}}</b></p>
-                            <p>Place: <b>{{ad.place}}</b></p>
-                            <p>District: <b>{{ad.district}}</b></p>
-                            <p>State: <b>{{ad.state}}</b></p>
-                            <p>Mobile: <b>{{ad.mobile}}</b></p>
-                            <p>Mobile2: <b>{{ad.mobile2}}</b></p>
-                            <p>Pin: <b>{{ad.pin_code}}</b></p>
-                        </div>
-                        <a class='btn btn-dark' href={% url 'update_customer' ad.pk %}>Edit Address</a>
+                <div class='row container'>
+                    
+                    <div class='col-sm-6 text-center'>
+                        <input type='text' value='{{user_profile.fname}}' required placeholder='First Name' class='form-control mb-3' name='fname' />
+                        <input type='email' value='{{user_profile.email}}' required placeholder='E-mail' class='form-control mb-3' name='email' />
+                        <input type='text' value='{{user_profile.city}}'  required placeholder='City' class='form-control mb-3' name='city' />
+                        <input type='text' value='{{user_profile.state}}' required placeholder='State' class='form-control mb-3' name='state' />
+                        <input type='text' value='{{user_profile.pincode}}' required placeholder='Pin Code' class='form-control mb-3' name='pincode' />
+                        <input type='hidden' value='COD' name='payment_mode' />
+
                     </div>
-                    <div class='form-check mt-2 mb-5'>
-                        <input class='form-check-input' type='radio' name='custid' id='custadd{{forloop.counter}}' value={{ad.id}} />
-                        <label class='form-check-label fw-bold' for='custadd {{forloop.counter}}' >
-                            Address: {{forloop.counter}}
-                        </label>
+
+                    <div class='col-sm-6 text-center'>
+                        <input type='text' value='{{user_profile.lname}}' required placeholder='Last Name' class='form-control mb-3' name='lname' />
+                        <input type='number' value='{{user_profile.phone}}' required placeholder='phone' class='form-control mb-3' name='phone' />
+                        <input type='text' value='{{user_profile.district}}' required placeholder='District' class='form-control mb-3' name='district' />
+                        <input type='text' value='{{user_profile.country}}' required placeholder='Country' class='form-control mb-3' name='country' />
+                        <input type='text'  placeholder='Message (*If you want)' class='form-control mb-3' name='message' />
                     </div>
-                {% endfor %}
-                
-            </form>
-            <div>
-                <h3>Total amount</h3>
-                <input type='number' class='form-control' name='totalamount' value={{total_amount}} readonly />
-                <br>
-                <div class='text-center'>
-                    <button class='btn btn-outline-success'>Place order</button>
+                    <div class='text-center'>
+                        <input type='text' value='{{user_profile.address}}' required placeholder='Address' class='form-control mb-3' name='address' />
+                    </div>
+                    <div class='text-center'>
+                        <button type='submit' class='btn btn-outline-success'>Place order</button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

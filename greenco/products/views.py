@@ -3,9 +3,10 @@ from django.views import View
 from .models import *
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .forms import customerForm
+# from .forms import customerForm
 from django.contrib import messages
 from django.http import JsonResponse
+import random
 
 @method_decorator(login_required,name='dispatch')
 class category_page(View):
@@ -51,66 +52,7 @@ class product_details(View):
         context={'products':products,'category':category,'item_count':item_count,'count':count}
         return render(request,'product_details.html',context)
 
-# customers details
-@method_decorator(login_required,name='dispatch')
-class customer_details(View):
-    def get(self,request):
-        form=customerForm()
-        cart_items=Cart.objects.filter(user=request.user)
-        item_count=len(cart_items)
-        context={'form':form,'item_count':item_count}
-        return render(request,'customer.html',context)
-    
-    def post(self,request):
-        form=customerForm(request.POST)
-        if form.is_valid():
-            customer=form.save(commit=False)
-            customer.user=request.user
-            customer.save()
-            messages.success(request,'Address added successfully')
-            return redirect('profile')
-        else:
-            messages.error(request,'Address not added')
-        
-        context={'form':form}
-        return render(request,'customer.html',context)
-    
 @login_required(login_url='login')
-def remove_customer(request,pk):
-    customer_add=Customer.objects.get(id=pk)
-    customer_add.delete()
-    messages.success(request,'Address removed ')
-    return redirect('profile')
-
-@login_required(login_url='login')
-def update_customer(request,pk):
-    customer_add=Customer.objects.get(id=pk)
-    
-    form=customerForm(instance=customer_add)
-    if request.method == 'POST':
-        form=customerForm(request.POST, instance=customer_add)
-        if form.is_valid():
-            customer=form.save(commit=False)
-            customer.user=request.user
-            customer.save()
-            messages.success(request,'Updated successfully')
-            return redirect('profile')
-        else:
-            messages.error(request,'Update failed')
-    cart_items=Cart.objects.filter(user=request.user)
-    item_count=len(cart_items)
-    context={'form':form,'item_count':item_count}
-    return render(request,'update_customer.html',context)
-
-@login_required(login_url='login')
-def customer_address(request):
-    cart_items=Cart.objects.filter(user=request.user)
-    item_count=len(cart_items)
-    customers=Customer.objects.filter(user=request.user)
-    context={'customers':customers,'item_count':item_count}
-    return render(request,'customer_address.html',context)
-
-
 def addToCart(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -140,7 +82,7 @@ def addToCart(request):
     return redirect('home')
 
 
-
+@login_required(login_url='login')
 def cart(request):
     cart_items=Cart.objects.filter(user=request.user)
     category=MainCategory.objects.all()
@@ -165,7 +107,7 @@ def remove_cart(request,pk):
     return redirect('cart')
 
 # update cart qty
-
+@login_required(login_url='login')
 def update_cart(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -181,8 +123,89 @@ def update_cart(request):
         
     return redirect('home')
 
-# wishlist
+# place order
+@login_required(login_url='login')
+def placeorder(request):
+    if request.method == 'POST':
+        current_user=User.objects.filter(id=request.user.id).first()
 
+        if not current_user.first_name :
+            current_user.first_name = request.POST.get('fname')
+            current_user.last_name = request.POST.get('lname')
+            current_user.save()
+        
+        if not Profile.objects.filter(user=request.user):
+            userprofile=Profile()
+            userprofile.user = request.user
+            userprofile.fname = request.POST.get('fname')
+            userprofile.fname = request.POST.get('lname')
+            userprofile.email = request.POST.get('email')
+            userprofile.city = request.POST.get('city')
+            userprofile.state = request.POST.get('state')
+            userprofile.pincode = request.POST.get('pincode')
+            userprofile.phone = request.POST.get('phone')
+            userprofile.district = request.POST.get('district')
+            userprofile.country = request.POST.get('country')
+            userprofile.address = request.POST.get('address')
+            userprofile.save()
+
+
+        neworder=Order()
+        neworder.user=request.user
+        neworder.fname=request.POST.get('fname')
+        neworder.email=request.POST.get('email')
+        neworder.city=request.POST.get('city')
+        neworder.state=request.POST.get('state')
+        neworder.pincode=request.POST.get('pincode')
+        neworder.lname=request.POST.get('lname')
+        neworder.phone=request.POST.get('phone')
+        neworder.district=request.POST.get('district')
+        neworder.country=request.POST.get('country')
+        neworder.message=request.POST.get('message')
+        neworder.address=request.POST.get('address')
+        neworder.payment_mode=request.POST.get('payment_mode')
+
+        cart_items=Cart.objects.filter(user=request.user)
+
+        amount=0
+        for p in cart_items:
+            value = p.product_qty * p.product.offer_price
+            amount = amount + value
+        if amount >= 2000:
+            total_amount = amount
+        else:
+            total_amount= amount + 40
+        
+        neworder.total_price = total_amount
+
+        trackno=request.user.username + str(random.randint(1111111,9999999))
+
+        while Order.objects.filter(tracking_no=trackno) is None:
+            trackno=request.user + str(random.randint(1111111,9999999))
+        
+        neworder.tracking_no = trackno
+        neworder.save()
+
+        for item in cart_items:
+            OrderItem.objects.create(
+                order=neworder,
+                product=item.product,
+                price=item.product.offer_price,
+                quantity=item.product_qty
+            )
+            # to reduce the quantity from available stock
+            orderproduct = Product.objects.filter(id=item.product_id).first()
+            orderproduct.quantity = orderproduct.quantity - item.product_qty
+            orderproduct.save()
+
+        # clear user cart
+        Cart.objects.filter(user=request.user).delete()
+        messages.success(request,'order has been placed successfully')
+    return redirect('home')
+
+
+# wishlist
+@login_required(login_url='login')
 def addtowishlist(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -206,6 +229,7 @@ def addtowishlist(request):
     
     return redirect('home')
 
+@login_required(login_url='login')
 def wishlist(request):
     wishlist_items=Wishlist.objects.filter(user=request.user)
     count=len(wishlist_items)
@@ -215,6 +239,7 @@ def wishlist(request):
     context={'wishlist_items':wishlist_items,'count':count,'category':category,'item_count':item_count}
     return render(request,'wishlist.html',context)
 
+@login_required(login_url='login')
 def remove_wishlist(request,pk):
     wishlist_items=Wishlist.objects.filter(user=request.user,id=pk)
     wishlist_items.delete()
@@ -223,7 +248,7 @@ def remove_wishlist(request,pk):
 
 
 # checkout
-
+@login_required(login_url='login')
 def checkout(request):
     cart_items=Cart.objects.filter(user=request.user)
     amount=0
@@ -234,10 +259,21 @@ def checkout(request):
         total_amount = amount
     else:
         total_amount= amount + 40
-    address=Customer.objects.filter(user=request.user)[:2]
-
-    
-    context={'cart_items':cart_items,'total_amount':total_amount,'address':address,'amount':amount}
+    user_profile = Profile.objects.filter(user=request.user).first()
+    wishlist_items=Wishlist.objects.filter(user=request.user)
+    count=len(wishlist_items)
+    cart_items=Cart.objects.filter(user=request.user)
+    item_count=len(cart_items)
+    category=MainCategory.objects.all()
+    context={
+        'cart_items':cart_items,
+        'total_amount':total_amount,
+        'user_profile':user_profile,
+        'amount':amount,
+        'count':count,
+        'item_count':item_count,
+        'category':category
+        }
     return render(request,'checkout.html',context)
 
 
