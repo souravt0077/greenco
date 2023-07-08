@@ -87,15 +87,21 @@
                             <div class='p-3 text-center border border-success'>
                                 <h5>Quantity</h5>
                                 <hr>
-                                <button class='btn btn-sm btn-outline-success increment-btn'><i class="bi bi-plus-circle-fill"></i></button>
-                                <input type='text' value=1 disabled class='qty_input btn' style='width:130px;' />
                                 <button class='less btn btn-sm btn-outline-danger decrement-btn'><i class="bi bi-dash-circle-fill"></i></button>
+                                <input type='text' value=1 disabled class='qty_input btn' style='width:130px;' />
+                                <button class='btn btn-sm btn-outline-success increment-btn'><i class="bi bi-plus-circle-fill"></i></button>
+
                             </div>        
                             {% csrf_token %}
                             <input type='hidden' class='prod_id' value={{item.id}} />
                         </div>
+                        <br>
                         <div class='text-center'>
+                            {% if item.quantity > 1 %}
                             <button class='add_to_cart mx-3 my-3'>Add to cart <i class="bi bi-cart-plus"></i></button>
+                            {% else %}
+                            <button class='btn btn-lg btn-danger'>Out Of Stock </button>
+                            {% endif %}
                             <button class='add_to_wishlist'>Add to wishlist <i class="bi bi-heart"></i></button>
                         </div>
                     {% endfor %}

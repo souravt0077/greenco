@@ -1,0 +1,86 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Orders{% endblock title %}
+
+{% block content %}
+<style>
+    .container{
+        min-height:100vh;
+    }
+    #center{
+        display:grid;
+        justify-content:center;
+        align-items:center;
+    }
+</style>
+
+
+<div class='container'>
+    <div class='p-5 text-center'>
+        <h1>My Orders</h1>
+    </div>
+    <hr>
+    {% if orders %}
+        <div class='row'>
+            {% for item in orders %}
+            <div class='col-sm-3 g-3'>
+                {% if item.status == 'Completed' %}  
+                <a href={% url 'vieworder' item.tracking_no %} >
+                    <div class='card d-block w-100 '>
+                        <div class='card-body bg-success text-white'title='click to view order details'>
+                            <p>{{forloop.counter}}</p>
+                            <h5>{{item}}</h5>
+                            <hr>
+                            <p><b>Ordered Date :</b> {{item.created_at|date}} {{item.created_at|time}}</p>
+                            <p><b>Tracking No. :</b> {{item.tracking_no}}</p>
+                            <p><b>Total Price :</b> <i class="bi bi-currency-rupee"></i>{{item.total_price}} /-</p>
+                            <p><b>Status :</b> {{item.status}}</p>
+                        </div>
+                    </div>
+                </a>
+                {% elif item.status == 'Pending' %}
+                <a href={% url 'vieworder' item.tracking_no %} >
+                    <div class='card d-block w-100 '>
+                        <div class='card-body bg-warning' title='click to view order details'>
+                            <p>{{forloop.counter}}</p>
+                            <h5>{{item}}</h5>
+                            <hr>
+                            <p><b>Ordered Date :</b> {{item.created_at|date}} {{item.created_at|time}}</p>
+                            <p><b>Tracking No. :</b> {{item.tracking_no}}</p>
+                            <p><b>Total Price :</b> <i class="bi bi-currency-rupee"></i>{{item.total_price}} /-</p>
+                            <p><b>Status :</b> {{item.status}}</p>
+                        </div>
+                    </div>
+                </a>
+                {% elif item.status == 'Out for Shipping' %}
+                <a href={% url 'vieworder' item.tracking_no %} >
+                    <div class='card d-block w-100 '>
+                        <div class='card-body bg-info' title='click to view order details'>
+                            <p>{{forloop.counter}}</p>
+                            <h5>{{item}}</h5>
+                            <hr>
+                            <p><b>Ordered Date :</b> {{item.created_at|date}} {{item.created_at|time}}</p>
+                            <p><b>Tracking No. :</b> {{item.tracking_no}}</p>
+                            <p><b>Total Price :</b> <i class="bi bi-currency-rupee"></i>{{item.total_price}} /-</p>
+                            <p><b>Status :</b> {{item.status}}</p>
+                        </div>
+                    </div>
+                </a>
+                {% endif %}
+            </div>
+            
+            {% endfor %}
+        </div>
+    {% else %}
+    <div class='col-sm-12 bg-light p-5' id='center'>
+        <h2 class='text-center p-3'>No Orders</h2>
+        <img src={% static 'images/no_order.jpg' %} class='d-block w-100' />
+    </div>
+    
+    {% endif %}
+</div>
+<br>
+<br>
+<br>
+{% include 'footer.html' %}
+{% endblock content %}

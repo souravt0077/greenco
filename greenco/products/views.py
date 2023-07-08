@@ -203,6 +203,21 @@ def placeorder(request):
         messages.success(request,'order has been placed successfully')
     return redirect('home')
 
+def myorders(request):
+    orders=Order.objects.filter(user=request.user)
+    category=MainCategory.objects.all()
+    context={'orders':orders,'category':category}
+    return render(request,'orders/myorders.html',context)
+
+def vieworder(request,t_no):
+    orders=Order.objects.filter(tracking_no=t_no).filter(user=request.user).first()
+    order_items=OrderItem.objects.filter(order=orders)
+    category=MainCategory.objects.all()
+
+    context={'order_items':order_items,'orders':orders,'category':category}
+    return render(request,'orders/vieworder.html',context)
+
+
 
 # wishlist
 @login_required(login_url='login')

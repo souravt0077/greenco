@@ -23,7 +23,9 @@ urlpatterns = [
     # place order
     path('placeorder/',views.placeorder,name='placeorder'),
 
-
+    # my orders
+    path('myorders/',views.myorders,name='myorders'),
+    path('vieworder/<str:t_no>/',views.vieworder,name='vieworder'),
 
 
     # wishlist

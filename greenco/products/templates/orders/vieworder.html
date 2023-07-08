@@ -1,0 +1,69 @@
+{% extends 'main.html' %}
+
+{% block title %}Order Details{% endblock title %}
+
+{% block content %}
+<style>
+    #page{
+        min-height:100vh;
+    }
+</style>
+
+
+<div class='container' id='page'>
+    <div class='row'>
+        <div class='col-sm-6'>
+            <h1 class='text-center p-3'>Order View</h1>
+            <hr>
+            {% if order_items %}
+                {% for item in order_items %}
+                <div class='row'>
+                    <div class='col-sm-6 g-3'>
+                        <h5>{{item.product.name}}</h5>
+                        <p><i class="bi bi-currency-rupee"></i> {{item.price}}/-</p>
+                        <p>{{item.quantity}} nos.</p>
+                    </div>
+                        <div class='col-sm-6 g-3'>
+                            <a href={% url 'product_details' item.product.slug %}>
+                            <img src={{item.product.product_images1.url}} class='d-block w-50' />
+                            </a>
+                        </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+
+        </div>
+        <div class='col-sm-6'>
+            <h1 class='text-center p-3'>Shipping Details</h1>
+            <hr>
+            <div class='row container'>
+                <div class='col-sm-6'>
+                    <input type='text' value='{{orders.fname}}' class='form-control mb-3' readonly />
+                    <input type='email' value='{{orders.email}}'  class='form-control mb-3' readonly />
+                    <input type='text' value='{{orders.city}}'   class='form-control mb-3' readonly >
+                    <input type='text' value='{{orders.state}}' class='form-control mb-3' readonly />
+                    <input type='text' value='{{orders.pincode}}'  class='form-control mb-3' readonly />
+                    <input type='text' value='{{orders.payment_mode}}'  class='form-control mb-3' readonly />
+                    <input type='text' value='{{orders.payment_id}}'  class='form-control mb-3' readonly />
+                </div>
+
+                <div class='col-sm-6'>
+                    <input type='text' value='{{orders.lname}}'  class='form-control mb-3' readonly />
+                    <input type='number' value='{{orders.phone}}' class='form-control mb-3' readonly />
+                    <input type='text' value='{{orders.district}}' class='form-control mb-3' readonly />
+                    <input type='text' value='{{orders.country}}' class='form-control mb-3' readonly/>
+                    <input type='text' value='{{orders.tracking_no}}'  class='form-control mb-3' readonly />
+                    <input type='text' value='{{orders.created_at}}'  class='form-control mb-3' readonly >
+                    <input type='text' value='{{orders.status}}'  class='form-control mb-3' readonly  />
+                </div>
+                <div class='container'>
+                    <input type='text' value='{{orders.address}}' class='form-control mb-3' readonly/>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock content %}
