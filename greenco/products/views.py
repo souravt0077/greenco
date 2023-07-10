@@ -138,8 +138,8 @@ def placeorder(request):
             userprofile=Profile()
             userprofile.user = request.user
             userprofile.fname = request.POST.get('fname')
-            userprofile.fname = request.POST.get('lname')
-            userprofile.email = request.POST.get('email')
+            userprofile.lname = request.POST.get('lname')
+            current_user.email = request.POST.get('email')
             userprofile.city = request.POST.get('city')
             userprofile.state = request.POST.get('state')
             userprofile.pincode = request.POST.get('pincode')
@@ -208,6 +208,31 @@ def myorders(request):
     category=MainCategory.objects.all()
     context={'orders':orders,'category':category}
     return render(request,'orders/myorders.html',context)
+
+def cancel_order(request,t_no):
+    user=request.user
+    orders=Order.objects.filter(tracking_no=t_no).filter(user=user).first()
+    orders.status='Canceled'
+    orders.save()
+    messages.success(request,'Order Canceled')
+    return redirect('myorders')    
+
+    
+
+# delete order history
+
+def delete_order_history(request):
+    orders=Order.objects.filter(user=request.user)
+    if orders.filter(status='Pending'):
+        messages.error(request,'Order is on progress.Can not clear history')
+        return redirect('myorders')
+    elif orders.filter(status='Out for Shipping'):
+        messages.error(request,'Order is on progress.Can not clear history')
+        return redirect('myorders')
+    else:
+        messages.success(request,'history cleard successfully')
+        orders.delete()
+        return redirect('myorders')
 
 def vieworder(request,t_no):
     orders=Order.objects.filter(tracking_no=t_no).filter(user=request.user).first()

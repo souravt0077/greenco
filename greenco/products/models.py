@@ -147,6 +147,7 @@ class Order(models.Model):
     ('Pending','Pending'),
     ('Out for Shipping','Out for Shipping'),
     ('Completed','Completed'),
+    ('Canceled','Canceled'),
     )
     status = models.CharField(max_length=150,choices=order_status,default='Pending') 
     message = models.TextField(null=True)
@@ -155,7 +156,7 @@ class Order(models.Model):
     updated_at=models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{}-{}".format(self.fname + '' + self.lname,self.tracking_no)
+        return "{}-{}-{}".format(self.fname + '' + self.lname,self.tracking_no,self.status)
 
     class Meta:
         ordering=['-created_at']

@@ -25,7 +25,9 @@ urlpatterns = [
 
     # my orders
     path('myorders/',views.myorders,name='myorders'),
+    path('delete_order/',views.delete_order_history,name='delete_order'),
     path('vieworder/<str:t_no>/',views.vieworder,name='vieworder'),
+    path('cancel_order/<str:t_no>/',views.cancel_order,name='cancel_order'),
 
 
     # wishlist

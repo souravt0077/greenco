@@ -4,7 +4,7 @@
 
 {% block content %}
 <style>
-    .container{
+    #container{
         min-height:100vh;
     }
     #center{
@@ -12,12 +12,28 @@
         justify-content:center;
         align-items:center;
     }
+    a{
+        text-decoration:none;
+        color:black;
+    }
 </style>
+{% if messages %}
+    {% for msg in messages %}
+        <div class='container mt-3'>
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>{{msg}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
 
-
-<div class='container'>
+<div class='container' id='container'>
     <div class='p-5 text-center'>
         <h1>My Orders</h1>
+        <p class='text-end'>
+        <a class='btn btn-sm btn-danger' href={% url 'delete_order' %}>Delete order history ?</a>
+        </p>
     </div>
     <hr>
     {% if orders %}
@@ -49,7 +65,11 @@
                             <p><b>Tracking No. :</b> {{item.tracking_no}}</p>
                             <p><b>Total Price :</b> <i class="bi bi-currency-rupee"></i>{{item.total_price}} /-</p>
                             <p><b>Status :</b> {{item.status}}</p>
+                            <p class='text-end'>
+                                <a class='btn btn-sm btn-danger' href={% url 'cancel_order' item.tracking_no %}>Cancel Order ?</a>
+                            </p>
                         </div>
+                        
                     </div>
                 </a>
                 {% elif item.status == 'Out for Shipping' %}
@@ -63,18 +83,37 @@
                             <p><b>Tracking No. :</b> {{item.tracking_no}}</p>
                             <p><b>Total Price :</b> <i class="bi bi-currency-rupee"></i>{{item.total_price}} /-</p>
                             <p><b>Status :</b> {{item.status}}</p>
+                            <p class='text-end'>
+                                <a class='btn btn-sm btn-danger' href={% url 'cancel_order' item.tracking_no %}>Cancel Order ?</a>
+                            </p>
+                        </div>
+                        
+                    </div>
+                </a>
+                {% elif item.status == 'Canceled' %}
+                <a href={% url 'vieworder' item.tracking_no %} >
+                    <div class='card d-block w-100 '>
+                        <div class='card-body bg-danger' title='click to view order details'>
+                            <p>{{forloop.counter}}</p>
+                            <h5>{{item}}</h5>
+                            <hr>
+                            <p><b>Ordered Date :</b> {{item.created_at|date}} {{item.created_at|time}}</p>
+                            <p><b>Tracking No. :</b> {{item.tracking_no}}</p>
+                            <p><b>Total Price :</b> <i class="bi bi-currency-rupee"></i>{{item.total_price}} /-</p>
+                            <p><b>Status :</b> {{item.status}}</p>
                         </div>
                     </div>
                 </a>
+
                 {% endif %}
             </div>
-            
             {% endfor %}
         </div>
     {% else %}
     <div class='col-sm-12 bg-light p-5' id='center'>
-        <h2 class='text-center p-3'>No Orders</h2>
-        <img src={% static 'images/no_order.jpg' %} class='d-block w-100' />
+        <h2 class='text-center p-3'>No Orders !  </h2>
+        <p class='text-center'><a class='btn btn-sm btn-outline-dark' href={% url 'category' %}>Make orders </a></p>
+        {% comment %} <img src={% static 'images/no_order.jpg' %} class='d-block w-100' /> {% endcomment %}
     </div>
     
     {% endif %}
@@ -82,5 +121,7 @@
 <br>
 <br>
 <br>
+
+
 {% include 'footer.html' %}
 {% endblock content %}
