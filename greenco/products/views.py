@@ -215,6 +215,12 @@ def cancel_order(request,t_no):
     orders.status='Canceled'
     orders.save()
     messages.success(request,'Order Canceled')
+
+    order_items = OrderItem.objects.filter(order=orders)
+    for item in order_items:
+        order_product = Product.objects.filter(id=item.product_id).first()
+        order_product.quantity = order_product.quantity + item.quantity
+        order_product.save()    
     return redirect('myorders')    
 
     
