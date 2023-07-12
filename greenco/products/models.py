@@ -177,6 +177,7 @@ class Profile(models.Model):
     fname=models.CharField(max_length=150,null=True)
     lname=models.CharField(max_length=150,null=True)
     phone=models.CharField(max_length=10,null=True)
+    email=models.EmailField(default='')
     address=models.TextField(null=False)
     city=models.CharField(max_length=150,null=False)
     district=models.CharField(max_length=150,null=False)

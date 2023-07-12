@@ -74,7 +74,7 @@
                     
                     <div class='col-sm-6 text-center'>
                         <input type='text' value='{{user_profile.fname}}' required placeholder='First Name' class='form-control mb-3' name='fname' />
-                        <input type='email' value='{{current_user.email}}' required placeholder='E-mail' class='form-control mb-3' name='email' />
+                        <input type='email' value='{{request.user.email}}' required placeholder='E-mail' class='form-control mb-3' name='email' />
                         <input type='text' value='{{user_profile.city}}'  required placeholder='City' class='form-control mb-3' name='city' />
                         <input type='text' value='{{user_profile.state}}' required placeholder='State' class='form-control mb-3' name='state' />
                         <input type='text' value='{{user_profile.pincode}}' required placeholder='Pin Code' class='form-control mb-3' name='pincode' />
@@ -91,13 +91,11 @@
                     </div>
                     <div class='text-center'>
                         <input type='text' value='{{user_profile.address}}' required placeholder='Address' class='form-control mb-3' name='address' />
-                    </div>
-                    <div class='text-center'>
-                        <button type='submit' class='btn btn-outline-success'>Place order</button>
-                        Or
-                        <button  class='btn btn-primary'>Pay with RazorPay</button>
-                    </div>
-
+                    </div>      
+                    <br>              
+                    <button type='submit' class='btn btn-outline-success'>Place order</button>
+                    <span class='text-center'>Or</span>
+                    <button  class='btn btn-primary'>Pay with RazorPay</button>
                 </div>
             </form>
         </div>

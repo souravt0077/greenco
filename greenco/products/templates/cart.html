@@ -70,13 +70,14 @@
 
                                         </div>
                                         <div class='col-sm-4 p-2 ' id='center'>
-                                            <div>
+                                            {% comment %} <div>
                                                 {% csrf_token %}
                                                 <input type='hidden' value={{item.id}} class='prod_id' />
                                                 <button class='btn btn-sm btn-outline-success changeqty increment-btn'><i class="bi bi-plus-circle-fill"></i></button>
                                                 <input type='text' value={{item.product_qty}} disabled class='qty_input btn ' style='width:50px;' />
                                                 <button class='less btn btn-sm btn-outline-danger changeqty decrement-btn  '><i class="bi bi-dash-circle-fill"></i></button>
-                                            </div>        
+                                            </div>         {% endcomment %}
+                                            <h5><b>{{item.product_qty}} Quantity</b></h5>
                                         </div>
                                                                               
                                     </div>

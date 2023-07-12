@@ -50,6 +50,7 @@
         {% else %}
         <div class='text-center' id='empty'>
             <img src={% static 'images/emptywishlist.png' %} />
+            <a class='btn btn-outline-secondary' href={% url 'category' %}>Add Products to Wishlist</a>
         </div>
         {% endif %}
     </div>

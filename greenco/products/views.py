@@ -3,7 +3,6 @@ from django.views import View
 from .models import *
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-# from .forms import customerForm
 from django.contrib import messages
 from django.http import JsonResponse
 import random
@@ -68,13 +67,16 @@ def addToCart(request):
                     return JsonResponse({'status':'Product allready in cart'})
                 else:
                     qty=int(request.POST.get('qty'))
-
-                    Cart.objects.create(
-                        product=prod_ckeck,
-                        user=request.user,
-                        product_qty=qty
-                    )
-                    return JsonResponse({'status':'Cart added successfully'})
+                    
+                    if qty > prod_ckeck.quantity:
+                        return JsonResponse({'status':"Can't add to  cart! only {} quantity stock available..".format(prod_ckeck.quantity)})
+                    else:
+                        Cart.objects.create(
+                            product=prod_ckeck,
+                            user=request.user,
+                            product_qty=qty
+                        )
+                        return JsonResponse({'status':'Cart added successfully'})
             else:
                 return JsonResponse({'status':'No product found'})
         else:
@@ -139,7 +141,7 @@ def placeorder(request):
             userprofile.user = request.user
             userprofile.fname = request.POST.get('fname')
             userprofile.lname = request.POST.get('lname')
-            current_user.email = request.POST.get('email')
+            userprofile.email = request.POST.get('email')
             userprofile.city = request.POST.get('city')
             userprofile.state = request.POST.get('state')
             userprofile.pincode = request.POST.get('pincode')
@@ -321,7 +323,6 @@ def checkout(request):
         'category':category
         }
     return render(request,'checkout.html',context)
-
 
 # Product based views
 @login_required(login_url='login')

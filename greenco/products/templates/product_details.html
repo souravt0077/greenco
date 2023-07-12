@@ -93,12 +93,12 @@
 
                             </div>        
                             {% csrf_token %}
-                            <input type='hidden' class='prod_id' value={{item.id}} />
+                            <input type='hidden' class='prod_id' name='prod_id' value={{item.id}} />
                         </div>
                         <br>
                         <div class='text-center'>
-                            {% if item.quantity > 1 %}
-                            <button class='add_to_cart mx-3 my-3'>Add to cart <i class="bi bi-cart-plus"></i></button>
+                            {% if item.quantity > 0 %}
+                                <button class='add_to_cart mx-3 my-3'>Add to cart <i class="bi bi-cart-plus"></i></button>
                             {% else %}
                             <button class='btn btn-lg btn-danger'>Out Of Stock </button>
                             {% endif %}
@@ -189,8 +189,6 @@
 
 <!-- JavaScript -->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-
-
 <!--gsap cdn-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/ScrollTrigger.min.js"></script>
