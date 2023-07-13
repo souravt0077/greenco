@@ -29,6 +29,8 @@
 
 <!--nav.css-->
 <link rel='stylesheet' href={% static 'css/nav.css' %} />
+<!-- font awesome cdn-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <!--google font for -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -118,6 +120,7 @@
             <li><a class="dropdown-item my-2" href={% url 'profile' %}><span class="material-symbols-outlined">badge</span> {{request.user}} <i class="bi bi-patch-check"></i></a></li>
             <li><a class="dropdown-item my-2" href={% url 'myorders' %}>My Orders</a></li>
             <li><a class="dropdown-item my-2" href={% url 'changepassword' %}>Change password</a></li>
+            <li><a class="dropdown-item my-2" id="darkModeToggle" onclick="toggleDarkMode()">Dark Mode</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href={% url 'logout' %}><span class="material-symbols-outlined">logout</span> Logout</a></li>
             {% else %}
