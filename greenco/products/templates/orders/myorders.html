@@ -11,6 +11,7 @@
         display:grid;
         justify-content:center;
         align-items:center;
+        {% comment %} margin-top:10%; {% endcomment %}
     }
     a{
         text-decoration:none;
@@ -29,14 +30,15 @@
 {% endif %}
 
 <div class='container' id='container'>
-    <div class='p-5 text-center'>
-        <h1>My Orders</h1>
-        <p class='text-end'>
-        <a class='btn btn-sm btn-danger' href={% url 'delete_order' %}>Delete order history ?</a>
-        </p>
-    </div>
-    <hr>
+    
     {% if orders %}
+        <div class='p-5 text-center'>
+            <h1>My Orders</h1>
+            <p class='text-end'>
+            <a class='btn btn-sm btn-danger' href={% url 'delete_order' %}>Delete order history ?</a>
+            </p>
+        </div>
+        <hr>
         <div class='row'>
             {% for item in orders %}
             <div class='col-sm-3 g-3'>
@@ -110,10 +112,11 @@
             {% endfor %}
         </div>
     {% else %}
-    <div class='col-sm-12 bg-light p-5' id='center'>
-        <h2 class='text-center p-3'>No Orders !  </h2>
-        <p class='text-center'><a class='btn btn-sm btn-outline-dark' href={% url 'category' %}>Make orders </a></p>
-        {% comment %} <img src={% static 'images/no_order.jpg' %} class='d-block w-100' /> {% endcomment %}
+    <div class='col-sm-12 p-5' id='center'>
+        <div>
+            <h1 class='text-center p-3'>No Orders !  </h1>
+            <p class='text-center'><a class='btn btn-sm btn-outline-dark' href={% url 'category' %}>Make orders </a></p>
+        </div>
     </div>
     
     {% endif %}

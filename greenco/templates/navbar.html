@@ -61,17 +61,17 @@
         <li class="nav-item mx-2 ">
           <a class="nav-link active text-white" aria-current="page"   href={% url 'home' %}><span class="material-symbols-outlined text-white">dashboard</span> Dashboard</a>
         </li>
+        {% if request.user.is_authenticated %}
         <li class="nav-item dropdown mx-2">
           <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <span class="material-symbols-outlined text-white">category</span> Category
           </a>
           <ul class="dropdown-menu">
-            {% if request.user.is_authenticated %}
-              {% if category %}
-                {% for items in category %}
-                  <li><a class="dropdown-item " href={% url 'subcategory_view' slug=items.slug %}>{{items}}</a></li>
-                {% endfor %}
-              {% endif %}
+            
+            {% if category %}
+              {% for items in category %}
+                <li><a class="dropdown-item " href={% url 'subcategory_view' slug=items.slug %}>{{items}}</a></li>
+              {% endfor %}
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item " href="#">Something else here</a></li>
               {% else %}
@@ -80,6 +80,7 @@
 
           </ul>
         </li>
+        {% endif %}
         <li class="nav-item mx-2">
           <a class="nav-link text-white" href="#"><span class="material-symbols-outlined text-white">info</span> Info</a>
         </li>
@@ -124,7 +125,7 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href={% url 'logout' %}><span class="material-symbols-outlined">logout</span> Logout</a></li>
             {% else %}
-            <li><a class='dropdown-item my-2'>Login required</a></li>
+            <li><a class="dropdown-item my-2" id="darkModeToggle" onclick="toggleDarkMode()">Dark Mode</a></li>
             {% endif %}
           </ul>
         </li>
